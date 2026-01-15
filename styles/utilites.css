@@ -57,3 +57,14 @@ a {
     display: flex !important;
   }
 }
+
+.d--none {
+  display: none !important;
+}
+
+.discount--price {
+  font-size: 12px;
+  color: #A3A5B2;
+  text-decoration-line: line-through;
+  text-decoration-color: #FF0000;
+}

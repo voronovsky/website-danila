@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
+    <title>Каталог</title>
     <link rel="stylesheet" href="./styles/catalog-main.css">
     <link rel="stylesheet" href="./style.css">
 </head>
@@ -12,9 +12,9 @@
     <main class="main-section">
         <div class="enter__links">
             <div class="container">
-                <a class="enter__links__main" href="">Главная</a>
+                <a class="enter__links__main" href="/">Главная</a>
                 <p>/</p>
-                <p>Каталог</p>
+                <p>Каталог</p>                
             </div>
         </div>
         <div class="catalog__nav">
@@ -23,31 +23,13 @@
                     <h3>Каталог</h3>
                 </div>
                 <div class="catalog__nav__bottom">
-                    <div class="catalog__nav__bottom__item">
-                        <img src="./assets/images/pages/catalog/sinks.png" alt="">
-                        <h3>Смесители</h3>
-                        <p>Товаров: 370</p>
-                    </div>
-                    <div class="catalog__nav__bottom__item">
-                        <img src="./assets/images/pages/catalog/shower_systems.png" alt="">
-                        <h3>Душевые системы</h3>
-                        <p>Товаров: 120</p>
-                    </div>
-                    <div class="catalog__nav__bottom__item">
-                        <img src="./assets/images/pages/catalog/shower_racks.png" alt="">
-                        <h3>Душевые стойки</h3>
-                        <p>Товаров: 146</p>
-                    </div>
-                    <div class="catalog__nav__bottom__item">
-                        <img src="./assets/images/pages/catalog/spout.png" alt="">
-                        <h3>Изливы</h3>
-                        <p>Товаров: 88</p>
-                    </div>
-                    <div class="catalog__nav__bottom__item">
-                        <img src="./assets/images/pages/catalog/accessories.png" alt="">
-                        <h3>Аксессуары</h3>
-                        <p>Товаров: 32</p>
-                    </div>
+                    <template id="catalogNavTemplate">
+                        <div class="catalog__nav__bottom__item">
+                            <img src="./assets/images/pages/catalog/sinks.png" alt="">
+                            <h3>Смесители</h3>
+                            <p>Товаров: <span class="catalog__nav__bottom__quantity">370</span></p>
+                        </div>
+                    </template>                    
                 </div>
             </div>
         </div>
@@ -57,106 +39,74 @@
                     <div class="filters__list">
                         <details class="filters__list__item">
                             <summary>Коллекция</summary>
-                            <ul class="filters__list__item__boxes">
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">ACIARIUM INOX</label>
-                                    <span class="checkbox__total__count">11</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">ALKES</label>
-                                    <span class="checkbox__total__count">19</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">DRAKE</label>
-                                    <span class="checkbox__total__count">4</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">ELITE</label>
-                                    <span class="checkbox__total__count">4</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">ERYOS</label>
-                                    <span class="checkbox__total__count">10</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">GRANGE</label>
-                                    <span class="checkbox__total__count">12</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">IVORY</label>
-                                    <span class="checkbox__total__count">3</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">JAGO</label>
-                                    <span class="checkbox__total__count">11</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">KLARYNG</label>
-                                    <span class="checkbox__total__count">36</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">KUOVADIS</label>
-                                    <span class="checkbox__total__count">12</span>
-                                </li>
+                            <ul class="filters__list__item__boxes filters__collections">
+                                <template id="filtersListItemBrandTemplate">
+                                    <li>
+                                        <input type="checkbox" name="" id="">
+                                        <label for="">ACIARIUM INOX</label>
+                                        <span class="checkbox__total__count">11</span>
+                                    </li>
+                                </template>
                             </ul>
                         </details>
                         <details class="filters__list__item">
                             <summary>Стиль</summary>
-                            <ul class="filters__list__item__boxes">
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Современный</label>
-                                    <span class="checkbox__total__count">75</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Ретро</label>
-                                    <span class="checkbox__total__count">63</span>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Футуризм</label>
-                                    <span class="checkbox__total__count">14</span>
-                                </li>
+                            <ul class="filters__list__item__boxes filters__style">
+                                <template id="filtersListItemStyleTemplate">
+                                    <li>
+                                        <input type="checkbox" name="" id="">
+                                        <label for="">Современный</label>
+                                        <span class="checkbox__total__count">75</span>
+                                    </li>
+                                </template>                                
                             </ul>
                         </details>
                         <details class="filters__list__item">
                             <summary>Цвет</summary>
-                            <ul class="filters__list__item__boxes">
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Золото</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Серебро</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Медь</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Хром</label>
-                                </li>
-                                <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Уголь</label>
-                                </li>
+                            <ul class="filters__list__item__boxes filters__color">
+                                <template id="filtersListItemColorTemplate">
+                                    <li>
+                                        <input type="checkbox" name="" id="">
+                                        <label for="">Золото</label>
+                                    </li>
+                                </template>                                
                             </ul>
                         </details>
                         <div class="filters__list__item">
                             <p>Цена, руб.</p>
+                            <div class="price__range">
+
+                                <div class="price__range__inputs">
+                                    <input type="number" 
+                                        class="price__range__input__min"
+                                        value="2500"
+                                        placeholder="От">
+                                    <span>-</span>
+                                    <input type="number" 
+                                        class="price__range__input__max"
+                                        value="7500"
+                                        placeholder="До">
+                                </div>
+
+                                <div class="price__range__slider">
+                                    <div class="progress"></div>
+                                </div>
+
+                                <div class="price__range__dots">
+                                    <input type="range"
+                                        class="price__range__dot__min"
+                                        min="0"
+                                        max="10000"
+                                        value="2500"
+                                        step="100">
+                                    <input type="range"
+                                        class="price__range__dot__max"
+                                        min="0"
+                                        max="10000"
+                                        value="7500"
+                                        step="100">
+                                </div>
+                            </div>                                                   
                         </div>
                         <button class="filters__list__reset">Сбросить фильтры</button>
                     </div>
@@ -166,492 +116,36 @@
                 <div class="container">
                     <div class="assortment__top">
                         <div class="assortment__top__buttons">
-                            <button class="buttons buttons--hover">Новинки</button>
-                            <button class="buttons buttons--hover">Акционные товары</button>
-                            <button class="buttons buttons--hover">Хиты продаж</button>  
-                        </div>                        
+                            <button id="filterNew" class="buttons buttons--hover">Новинки</button>
+                            <button id="filterActions" class="buttons buttons--hover">Акционные товары</button>
+                            <button id="filterHits" class="buttons buttons--hover">Хиты продаж</button>
+                        </div>
                         <div class="assortment__top__checkboxes">
                             <details class="filters__list__item">
                             <summary>Сортировка</summary>
                             <ul class="filters__list__item__boxes">
                                 <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">В наличии</label>
+                                    <input type="checkbox" name="available" id="available">
+                                    <label for="available">В наличии</label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">Под заказ</label>
+                                    <input type="checkbox" name="order" id="order">
+                                    <label for="order">Под заказ</label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">По возрастанию цены</label>
+                                    <input type="checkbox" name="price-asc" id="price-asc">
+                                    <label for="price-asc">По возрастанию цены</label>
                                 </li>
                                 <li>
-                                    <input type="checkbox" name="" id="">
-                                    <label for="">По убыванию цены</label>
+                                    <input type="checkbox" name="price-desc" id="price-desc">
+                                    <label for="price-desc">По убыванию цены</label>
                                 </li>
                             </ul>
                         </details>
-                        </div>                      
+                        </div>
                     </div>
                     <div class="assortment__bottom">
                         
-                        <!--1 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--2 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--3 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--4 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--5 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--6 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--7 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--8 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--9 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--10 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--11 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>
-
-                        <!--12 карточка-->
-                        <div class="assortment__item">
-                            <div class="assortment__item__view">
-                                <div class="assortment__item__tags">
-                                    <p class="assortment__item__tags__new">Новинка</p>
-                                    <p class="assortment__item__tags__action">Акция</p>
-                                    <p class="assortment__item__tags__hit">Хит</p>
-                                </div>
-                                <img src="./assets/images/pages/catalog/product.png" alt="">
-                            </div>                                                        
-                            <div class="assortment__item__info">
-                                <div class="assortment__item__info__available">
-                                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                                    </svg>
-                                    <p>В наличии</p>
-                                </div>
-                                <div class="assortment__item__info__article">
-                                    <p>Артикул: 4718CD</p>
-                                </div>                                
-                            </div>
-                            <div class="assortment__item__name">
-                                <h3>Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
-                            </div>
-                            <div class="assortment__item__collection">
-                                <h3>Коллекция: ACIARIUM INOX</h3>
-                            </div>                            
-                            <div class="assortment__item__price">
-                                <p>38 000 руб./шт</p>
-                                <div class="assortment__item__price__action">
-                                    <p></p>
-                                </div>
-                            </div>
-                            <button class="assortment__item__add">В корзину</button>
-                            <button class="assortment__item__buynow">Купить в 1 клик</button>
-                        </div>             
-
                     </div>
                     <div class="assortment__pages">
 
@@ -660,6 +154,50 @@
             </div>
         </div>
     </main>
+    <template id="assortmentTemplate">
+        <div class="assortment__item">
+            <div class="assortment__item__view">
+                <div class="assortment__item__tags">
+                    <p class="assortment__item__tag assortment__item__tag--new">Новинка</p>
+                    <p class="assortment__item__tag assortment__item__tag--action">Акция</p>
+                    <p class="assortment__item__tag assortment__item__tag--hit">Хит</p>
+                </div>
+                <img src="./assets/images/pages/catalog/product.png" alt="">
+            </div>
+            <div class="assortment__item__info">
+                <div class="assortment__item__info__badge 
+                assortment__item__info__badge--available 
+                assortment__item__info__badge--outofstock">
+                    <div class="assortment__item__avaible__logo"></div>
+                    <p><span class="assortment__item__avaible__tag">В наличии</span></p>
+                </div>
+                <div class="assortment__item__info__article">
+                    <p>Артикул: <span class="assortment__item__article">4718CD</span></p>
+                </div>
+            </div>
+            <h3 class="assortment__item__name">Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
+            <p class="assortment__item__collection">Коллекция: <span class="assortment__item__colection__value">ACIARIUM INOX</span></p>
+            <div class="assortment__item__price">
+                <p class="assortment__item__price__par__action d--none"><span class="assortment__item__price--action">38 000</span> руб./шт</p>
+                <p class="assortment__item__price__par__value"><span class="assortment__item__price--value">38 000</span> руб./шт</p>
+            </div>
+
+            <button class="assortment__item__add">
+                <span id="addBtn">В корзину</span>                                    
+            </button>
+            <div class="assortment__item__add__handler d--none">
+                <div class="assortment__item__add__controls">
+                    <button  class="assortment__item__change assortment__item--minus">-</button>
+                    <span  class="assortment__item__add__quantity"></span>
+                    <button class="assortment__item__change assortment__item--plus">+</button>
+                </div>
+                <span class="assortment__item__add__value">шт.</span>
+            </div>
+            
+            <button class="assortment__item__button__now">Купить в 1 клик</button>
+        </div>
+    </template>
+    <script src="./js/main.js"></script>
     <script src="./js/swiper-bundle.js"></script>
 </body>
 </html>
