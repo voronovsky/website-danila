@@ -1,15 +1,23 @@
 console.log('Hello world');
 
-const express = require('express')
+const express = require('express') //Веб фреймворк для Node.js для разработки серверных приложении
 
-const app = express()
+const path = require('path');
 
-const PORT = process.env.PORT || 3000;
+const app = express() //Создание веб-приложения на базе фреймворка express
 
-app.get('/', function(req, res) {
-    res.send('Привет мир!!!');
-});
+const itemRouter = require('../website-danila/routes/items')
 
-app.listen(PORT, () => {
+const userRouter = require('../website-danila/routes/users')
+
+app.use(express.static(path.join(__dirname, 'public')));
+
+app.use('/', itemRouter);
+
+app.use('/', userRouter);
+
+const PORT = process.env.PORT || 3000; //Установка использованного ПОРТА для работы нашего локального приложения
+
+app.listen(PORT, () => { //Слушатель для callback функции (получения обратной связи)
     console.log('Сервер запустился!!!');
 })

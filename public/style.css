@@ -1,0 +1,14 @@
+@import url("../styles/normalize.css");
+@import url("../styles/variable.css");
+@import url("../styles/fonts.css");
+@import url("../styles/utilites.css");
+@import url("../styles/swiper-bundle.css");
+@import url("../styles/pagination.css");
+@import url("../styles/ui.css");
+@import url("../styles/header.css");
+@import url("../styles/footer.css");
+@import url("../styles/main.css");
+@import url("../styles/scrollbar.css");
+
+@import url("../js/bootstrap.bundle.min.js");
+@import url("../js/swiper-bundle.js");
