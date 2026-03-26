@@ -1,7 +1,18 @@
 document.addEventListener("DOMContentLoaded", () => {
     const burger = document.querySelector('#burger');
     const menuTabletCloseBtn = document.querySelector('#menuTabletClose');
-    const menuTablet = document.querySelector('#menuTablet');
+    const menuTablet = document.querySelector('#menuTablet');    
+
+    //Функция для отображения общего кол-ва товаров в корзине
+    const cartTotalCount = document.getElementById('cart__counter');
+    function getCartTotalCount() {
+        if (!CartManager.getCart) {
+            return 0;
+        }else{
+            let totalCount = CartManager.getTotalItems();
+            cartTotalCount.textContent = totalCount;
+        }
+    }
 
     if (burger)  {
         burger.addEventListener('click', (e) => {
@@ -266,162 +277,175 @@ document.addEventListener("DOMContentLoaded", () => {
         });
     });
 
-    /*AssortmentTemplate*/
-    const mockAssortmentTemplate = [
-        {
-            id: 1,
-            article: '4720X', 
-            img: './assets/images/pages/catalog/items/4720X.png',
-            name: 'Demm Rory Смеситель для биде на 1 отв. с донным клапаном, цвет: бронза',
-            collection: 'ERYOS',
-            available: true, /*1 - В наличии, 2 - Нет в наличии*/
-            tag: 'new', /*new, discount, hit*/
-            price: 5460
-        },
-        {
-            id: 3,
-            article: '5464321', 
-            img: './assets/images/pages/catalog/items/4718GH.png',
-            name: 'Demm Rory Смеситель для биде на 1 отв. с донным клапаном, цвет: бронза',
-            collection: 'ERYOS',
-            available: true, /*1 - В наличии, 2 - Нет в наличии*/
-            tag: 'discount', /*new, discount, hit*/
-            price: 5700,
-            action: 3200
-        },
-        {
-            id: 2,
-            article: '4720asd', 
-            img: './assets/images/pages/catalog/items/4718CD.png',
-            name: 'Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото',
-            collection: 'ELITE',
-            available: false, /*1 - В наличии, 2 - Нет в наличии*/
-            tag: 'hit', /*new, discount, hit*/
-            price: 3280,
-            action: 1250
-        },
-    ]
-
+    
+    // initial load
+    renderMockAssortment(itemData);
 
     function renderMockAssortment(mockArray) {        
-            const assortmentTemplate = document.querySelector('#assortmentTemplate');
-            document.querySelector('.assortment__bottom').innerHTML = "";
-            mockArray.forEach((item) => {
-                const itemTemplate = assortmentTemplate.content.cloneNode(true);
-                const assortmentItemTag = document.querySelector('#assortmentItemTag');
+        const assortmentTemplate = document.querySelector('#assortmentTemplate');
+        document.querySelector('.assortment__bottom').innerHTML = "";
+        
+        mockArray.forEach((item) => {
+            const itemTemplate = assortmentTemplate.content.cloneNode(true);
+            const assortmentItemTag = document.querySelector('#assortmentItemTag');
 
-                itemTemplate.querySelector('.assortment__item__article').textContent = item.article;
-                itemTemplate.querySelector('.assortment__item__name').textContent = item.name;
+            itemTemplate.querySelector('.assortment__item__article').textContent = item.article;
+            itemTemplate.querySelector('.assortment__item__name').textContent = item.name;
 
-                itemTemplate.querySelector('img').setAttribute('src', item.img);
-                itemTemplate.querySelector('img').setAttribute('alt', item.name);
+            itemTemplate.querySelector('img').setAttribute('src', item.img);
+            itemTemplate.querySelector('img').setAttribute('alt', item.name);
 
-                itemTemplate.querySelector('.assortment__item__colection__value').textContent = item.collection;
+            itemTemplate.querySelector('.assortment__item__colection__value').textContent = item.collection;
 
-                if (!item.available) {
-                    itemTemplate.querySelector('.assortment__item__info__badge').classList.remove('assortment__item__info__badge--available');
-                    itemTemplate.querySelector('.assortment__item__info__badge').classList.add('assortment__item__info__badge--outofstock');
-                    itemTemplate.querySelector('.assortment__item__info__badge').innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                            <rect width="14" height="14" rx="7" fill="#E4E5E9"/>
-                            <path d="M5 5L9 9" stroke="#797D91" stroke-linecap="round"/>
-                            <path d="M5 9L9 5" stroke="#797D91" stroke-linecap="round"/>
-                        </svg> Нет в наличии
-                    `;
-                } else {
-                    itemTemplate.querySelector('.assortment__item__info__badge').classList.add('assortment__item__info__badge--available');
-                    itemTemplate.querySelector('.assortment__item__info__badge').classList.remove('assortment__item__info__badge--outofstock');
-                    itemTemplate.querySelector('.assortment__item__info__badge').innerHTML = `
-                    <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <rect width="14" height="14" rx="7" fill="#11D25E"/>
-                        <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
-                    </svg> В наличии
-                    `;
-                }
+            if (!item.available) {
+                itemTemplate.querySelector('.assortment__item__info__badge').classList.remove('assortment__item__info__badge--available');
+                itemTemplate.querySelector('.assortment__item__info__badge').classList.add('assortment__item__info__badge--outofstock');
+                itemTemplate.querySelector('.assortment__item__info__badge').innerHTML = `<svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <rect width="14" height="14" rx="7" fill="#E4E5E9"/>
+                        <path d="M5 5L9 9" stroke="#797D91" stroke-linecap="round"/>
+                        <path d="M5 9L9 5" stroke="#797D91" stroke-linecap="round"/>
+                    </svg> Нет в наличии
+                `;
+            } else {
+                itemTemplate.querySelector('.assortment__item__info__badge').classList.add('assortment__item__info__badge--available');
+                itemTemplate.querySelector('.assortment__item__info__badge').classList.remove('assortment__item__info__badge--outofstock');
+                itemTemplate.querySelector('.assortment__item__info__badge').innerHTML = `
+                <svg width="14" height="14" viewBox="0 0 14 14" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="14" height="14" rx="7" fill="#11D25E"/>
+                    <path d="M4 6.5L6.16073 8.84079C6.23992 8.92658 6.37546 8.92658 6.45465 8.84079L10 5" stroke="white" stroke-linecap="round"/>
+                </svg> В наличии
+                `;
+            }
 
-                switch(item.tag) {
-                    case 'hit':
-                        itemTemplate.querySelector('.assortment__item__tag--new').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--action').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--hit').classList.contains('d--none') ?
-                            itemTemplate.querySelector('.assortment__item__tag--hit').classList.remove('d--none') : null;
-                        break;
-                    case 'discount':
-                        itemTemplate.querySelector('.assortment__item__tag--new').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--hit').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--action').classList.contains('d--none') ?
-                            itemTemplate.querySelector('.assortment__item__tag--action').classList.remove('d--none') : null;
-                        break;
-                    default:
-                        itemTemplate.querySelector('.assortment__item__tag--action').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--hit').classList.add('d--none');
-                        itemTemplate.querySelector('.assortment__item__tag--new').classList.contains('d--none') ?
-                            itemTemplate.querySelector('.assortment__item__tag--new').classList.remove('d--none') : null;
-                        break;
-                }
+            switch(item.tag) {
+                case 'hit':
+                    itemTemplate.querySelector('.assortment__item__tag--new').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--action').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--hit').classList.contains('d--none') ?
+                        itemTemplate.querySelector('.assortment__item__tag--hit').classList.remove('d--none') : null;
+                    break;
+                case 'discount':
+                    itemTemplate.querySelector('.assortment__item__tag--new').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--hit').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--action').classList.contains('d--none') ?
+                        itemTemplate.querySelector('.assortment__item__tag--action').classList.remove('d--none') : null;
+                    break;
+                default:
+                    itemTemplate.querySelector('.assortment__item__tag--action').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--hit').classList.add('d--none');
+                    itemTemplate.querySelector('.assortment__item__tag--new').classList.contains('d--none') ?
+                        itemTemplate.querySelector('.assortment__item__tag--new').classList.remove('d--none') : null;
+                    break;
+            }
 
-                //Price
-                if (item.action) {
-                    itemTemplate.querySelector('.assortment__item__price__par__action').classList.remove('d--none');
-                    itemTemplate.querySelector('.assortment__item__price__par__value').classList.add('discount--price');
-                }
+            //Price
+            if (item.action) {
+                itemTemplate.querySelector('.assortment__item__price__par__action').classList.remove('d--none');
+                itemTemplate.querySelector('.assortment__item__price__par__value').classList.add('discount--price');
+            }
 
-                itemTemplate.querySelector('.assortment__item__price--value').textContent = item.price;
-                itemTemplate.querySelector('.assortment__item__price--action').textContent = item.action;
+            itemTemplate.querySelector('.assortment__item__price--value').textContent = item.price;
+            itemTemplate.querySelector('.assortment__item__price--action').textContent = item.action;
 
-                // Button handler
-                const itmBtn = itemTemplate.querySelector('.assortment__item__add');
-                const ctrlBtn = itemTemplate.querySelector('.assortment__item__add__handler');
-                const itmCount = itemTemplate.querySelector('.assortment__item__add__quantity');
-                const btnMinus = itemTemplate.querySelector('.assortment__item--minus');
-                const btnPlus = itemTemplate.querySelector('.assortment__item--plus');
+            // Button handler
+            const itmBtn = itemTemplate.querySelector('.assortment__item__add');
+            const ctrlBtn = itemTemplate.querySelector('.assortment__item__add__handler');
+            const itmCount = itemTemplate.querySelector('.assortment__item__add__quantity');
+            const btnMinus = itemTemplate.querySelector('.assortment__item--minus');
+            const btnPlus = itemTemplate.querySelector('.assortment__item--plus');
 
-                let count = 1;
+            let count = CartManager.getTotalItemsPerProduct(item.id);
+            let quantityBorder = 1;
 
+            if (!CartManager.getTotalItemsPerProduct(item.id)) {
                 if (itmBtn) {
                     itmBtn.addEventListener('click', (e) => {
                         ctrlBtn.classList.remove('d--none');
                         itmBtn.classList.add('d--none');
+                        CartManager.addToCart(item.id);
+                        count = CartManager.getTotalItemsPerProduct(item.id);
                         itmCount.innerHTML = count;
+                        getCartTotalCount();                        
                     });
                 }   
+            }else{
+                ctrlBtn.classList.remove('d--none');
+                getCartTotalCount(); 
+                count = CartManager.getTotalItemsPerProduct(item.id);
+                itmCount.innerHTML = count;   
+                itmBtn.classList.add('d--none');
+            };  
 
-                if (btnPlus) {
-                    btnPlus.addEventListener('click', (e) => {
-                        count++;
+            if (btnPlus) {
+                btnPlus.addEventListener('click', (e) => {
+                    CartManager.quantityPlus(item.id);
+                    count = CartManager.getTotalItemsPerProduct(item.id);
+                    itmCount.innerHTML = count;
+                    getCartTotalCount(); 
+                });
+            }
+
+            if (btnMinus) {
+                btnMinus.addEventListener('click', (e) => {
+                    if (count > quantityBorder) {
+                        CartManager.quantityMinus(item.id);
+                        count = CartManager.getTotalItemsPerProduct(item.id);
                         itmCount.innerHTML = count;
-                    });
-                }
+                        getCartTotalCount(); 
+                    }else{
+                        ctrlBtn.classList.add('d--none');
+                        itmBtn.classList.remove('d--none');
+                        CartManager.removeFromCart(item.id);
+                        getCartTotalCount(); 
+                    }
+                });
+            }
 
-                if (btnMinus) {
-                    btnMinus.addEventListener('click', (e) => {
-                        count--;
-                        if (count < 0) {
-                            count = 0;
-                        }
-                        itmCount.innerHTML = count;
-                    });
-                }
+            document.querySelector('.assortment__bottom').append(itemTemplate)
+        });
+    }   
 
-                document.querySelector('.assortment__bottom').append(itemTemplate)
-            });
-    }
-
-    // initial load
-    renderMockAssortment(mockAssortmentTemplate);
-
+    
+    //Функция сортировки по убыванию цены
     function sortMockPriceAsc(mockArray) {
-        renderMockAssortment(mockArray.sort((a, b) => a.price - b.price))
+        if (!mockArray.action) {
+            renderMockAssortment(mockArray.sort((a, b) => a.action - b.price))
+        }else{            
+            renderMockAssortment(mockArray.sort((a, b) => a.price - b.price))
+        }
     }
+    //Функция сортировки по возрастанию цены
     function sortMockPriceDesc(mockArray) {
-        renderMockAssortment(mockArray.sort((a, b) => b.price - a.price))
+        if (!mockArray.action) {
+            renderMockAssortment(mockArray.sort((a, b) => b.action - a.price))
+        }else{
+            renderMockAssortment(mockArray.sort((a, b) => b.price - a.price))
+        }
+    }
+    //Функция сортировки по доступному товару
+    function sortMockAvailable(mockArray) {        
+        renderMockAssortment(mockArray.filter(mockArray => mockArray.available === true))        
+    }
+    //Функция сортировки по НЕдоступному товару
+    function sortMockNotAvailable(mockArray) {
+        renderMockAssortment(mockArray.filter(mockArray => mockArray.available === false))  
     }
 
-    function sortMockAvailable(mockArray) {
-        renderMockAssortment(mockArray.sort(available))
+    //Функция сортировки по тегу "Новинки"
+    function sortMockTagNew(mockArray) {
+        renderMockAssortment(mockArray.filter(mockArray => mockArray.tag === 'new'))
+    }
+    //Функция сортировки по тегу "Акция"
+    function sortMockTagActions(mockArray) {
+        renderMockAssortment(mockArray.filter(mockArray => mockArray.tag === 'discount'))
+    }
+    //Функция сортировки по тегу "Хиты продаж"
+    function sortMockTagHit(mockArray) {
+        renderMockAssortment(mockArray.filter(mockArray => mockArray.tag === 'hit'))
     }
 
     //filterProductsFunc
-    let filterProducts = mockAssortmentTemplate;
+    let filterProducts = itemData;
 
     function filterProductsFunc() {
         let selectedBrand = document.getElementById('filtersListItemBrandTemplate').value;        
@@ -431,20 +455,44 @@ document.addEventListener("DOMContentLoaded", () => {
     const sortPriceAsc = document.getElementById('price-asc');
     const sortPriceDesc = document.getElementById('price-desc');
     const sortItemAvailable = document.getElementById('available');
+    const sortItemNotAvailable = document.getElementById('order');
+    const sortItemNew = document.getElementById('filterNew');
+    const sortItenActions = document.getElementById('filterActions');
+    const sortItemHits = document.getElementById('filterHits');
 
     sortPriceAsc.addEventListener('click', (e) => {
         e.preventDefault();
-        sortMockPriceAsc(mockAssortmentTemplate);
+        sortMockPriceAsc(itemData);
     })
 
     sortPriceDesc.addEventListener('click', (e) => {
         e.preventDefault();
-        sortMockPriceDesc(mockAssortmentTemplate);
+        sortMockPriceDesc(itemData);
     })
 
     sortItemAvailable.addEventListener('click', (e) => {
         e.preventDefault();
-        sortMockAvailable(mockAssortmentTemplate);
+        sortMockAvailable(itemData);
+    })
+
+    sortItemNotAvailable.addEventListener('click', (e) => {
+        e.preventDefault();
+        sortMockNotAvailable(itemData);
+    })
+
+    sortItemNew.addEventListener('click', (e) => {
+        e.preventDefault();
+        sortMockTagNew(itemData);
+    })
+
+    sortItenActions.addEventListener('click', (e) => {
+        e.preventDefault();
+        sortMockTagActions(itemData);
+    })
+
+    sortItemHits.addEventListener('click', (e) => {
+        e.preventDefault();
+        sortMockTagHit(itemData);
     })
 
 // Инициализация

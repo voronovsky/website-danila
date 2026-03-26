@@ -73,6 +73,7 @@
     font-family: var(--font-family-medium);
     font-size: 15px;
     text-decoration: none;
+    
 }
 
 .categoriesNav__cart__icon {
@@ -86,14 +87,14 @@
 
 .categoriesNav__cart__amount {
     height: 15px;
-    width: 15px;
+    width: 18px;
     display: flex;
     align-items: center;
     justify-content: center;
     border-radius: 50%;
     background-color: #C6BCB2;
     font-family: var(--font-family-semibold);
-    font-size: 10px;
+    font-size: 13px;
     color: #fff;
     position: absolute;
     top: 0px;
@@ -558,6 +559,7 @@
     position: relative;
     display: flex;
     justify-content: center;
+    margin-bottom: 80px;
 }
 
 .about .container {
@@ -697,7 +699,6 @@
     position: relative;
     display: flex;
     box-sizing: content-box;
-    margin-top: 80px;
 }
 
 .contact__background {

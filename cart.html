@@ -1,11 +1,12 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="ru">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./style.css" />
+    <title>Корзина</title>
+    <link rel="stylesheet" href="./styles/cart-main.css">
+    <link rel="stylesheet" href="./style.css">
   </head>
   <body>
     <header class="header">
@@ -49,7 +50,7 @@
       <div class="header__bottom">
         <div class="container">
           <div class="header__bottom__left">
-            <a href="" class="header__logo">
+            <a href="./index.html" class="header__logo">
               <img src="./assets/images/logo.png" alt="Лого" />
             </a>
             <form
@@ -141,7 +142,7 @@
               <li class="categoriesNav__list__item"><a href="">Изливы</a></li>
               <li class="categoriesNav__list__item"><a href="">Аксессуары</a></li>
             </ul>
-            <a href="./cart.html" class="categoriesNav__cart">
+            <a href="" class="categoriesNav__cart">
               <span class="categoriesNav__cart__icon">
                 <svg
                   width="24"
@@ -178,345 +179,52 @@
             </a>
         </div>
       </div>
-    </header>
+    </header>    
     <main class="main-section">
-      <section class="ScreenSlider">
-        <div class="swiper ScreenSlider__object">
-          <div class="swiper-wrapper">
 
-            <!--Слайд 1-->
-            <div class="swiper-slide Screen__slide">
-                <!--Фоновая картинка-->
-              <img class="Screen__slide__bg" src="./assets/images/main-slide_1.png" alt="Слайд 1" />
-              <div class="container">
-                <!--Кнопка для перехода в каталог-->
-                <div>
-                  <a href="./catalog.html" class="Screen__slide__link">Перейти в каталог
-                    <span class="Screen__slide__link__icon">
-                      <svg
-                        width="5"
-                        height="8"
-                        viewBox="0 0 5 8"
-                        fill="none"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7"
-                          stroke="#C6BCB2"
-                          stroke-width="1.5"
-                          stroke-linecap="round"
-                        />
-                      </svg>
-                    </span>
-                  </a>
-                  <h2 class="Screen__slide__h">Изысканные смесители для вашего интерьера</h2>
-                  <p class="Screen__slide__p">
-                    Гарантируем высочайшую безопасность и надёжность
-                    в соответствии с международными стандартами качества.
-                  </p>
-                </div>
-              </div>
-            </div>
-          
-            <!--Слайд 2-->
-            <div class="swiper-slide Screen__slide">
-              <img class="Screen__slide__bg" src="./assets/images/main-slide_2.png" alt="Слайд 2" />
-              <div class="container">
-                <a href="" class="Screen__slide__link">Перейти в каталог
-                  <span class="Screen__slide__link__icon">
-                    <svg
-                      width="5"
-                      height="8"
-                      viewBox="0 0 5 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7"
-                        stroke="#C6BCB2"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                    </svg>
-                  </span>
-                </a>
-                <h2 class="Screen__slide__h">Душевые системы от известного производителя</h2>
-                <p class="Screen__slide__p">
-                  Гарантируем высочайшую безопасность и надёжность
-                  в соответствии с международными стандартами качества.
-                </p>
-              </div>
-            </div>
-
-            <!--Слайд 3-->
-            <div class="swiper-slide Screen__slide">
-              <img class="Screen__slide__bg" src="./assets/images/main-slide_3.png" alt="Слайд 3" />
-              <div class="container">
-                <a href="" class="Screen__slide__link">Перейти в каталог
-
-                  <span class="Screen__slide__icon">
-                    <svg
-                      width="5"
-                      height="8"
-                      viewBox="0 0 5 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7"
-                        stroke="#C6BCB2"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                    </svg>
-                  </span>
-                </a>
-                <h2 class="Screen__slide__h">Прочные душевые стойки</h2>
-                <p class="Screen__slide__p">
-                  Гарантируем высочайшую безопасность и надёжность
-                  в соответствии с международными стандартами качества.
-                </p>
-              </div>
-            </div>
-
-            <!--Слайд 4-->
-            <div class="swiper-slide Screen__slide">
-              <img class="Screen__slide__bg" src="./assets/images/main-slide_4.png" alt="Слайд 4" />
-              <div class="container">
-                <a href="" class="Screen__slide__link">Перейти в каталог
-                  <span class="Screen__slide__link__icon">
-                    <svg
-                      width="5"
-                      height="8"
-                      viewBox="0 0 5 8"
-                      fill="none"
-                      xmlns="http://www.w3.org/2000/svg"
-                    >
-                      <path
-                        d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7"
-                        stroke="#C6BCB2"
-                        stroke-width="1.5"
-                        stroke-linecap="round"
-                      />
-                    </svg>
-                  </span>
-                </a>
-                <h2 class="Screen__slide__h">Изливы переосмыслены лучшими дизайнерами Италии</h2>
-                <p class="Screen__slide__p">
-                  Гарантируем высочайшую безопасность и надёжность
-                  в соответствии с международными стандартами качества.
-                </p>
-              </div>
-            </div>
+        <div class="enter__links">
+          <div class="container">
+              <a class="enter__links__main" href="/">Главная</a>
+              <p>/</p>
+              <p>Корзина</p>               
           </div>
-          <div class="swiper-pagination"></div>
         </div>
-      </section>
 
-      <section class="categories">
-        <div class="container">
-
-          <div class="categories__item categories__item--square" style="grid-area: box1">
-            <img class="categories__item__img" src="./assets/images/sinks.png" alt="" />
-            <div class="categories__item__content">
-              <h3 class="categories__item__h">Смесители</h3>
-              <a class="categories__item__link" href="">
-                <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7" stroke="#C6BCB2" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            </div>
+        <div class="cart__top">
+          <div class="container">
+            <h3>Корзина</h3>
+            <p>Общее количество товаров: 3</p>
           </div>
-
-
-          <div class="categories__item categories__item--rectangle" style="grid-area: box2">
-            <img class="categories__item__img" src="./assets/images/shower_systems.png" alt="" />
-            <div class="categories__item__content">
-              <h3 class="categories__item__h">Душевые системы</h3>
-              <a class="categories__item__link" href="">
-                <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7" stroke="#C6BCB2" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="categories__item categories__item--rectangle" style="grid-area: box3">
-            <img class="categories__item__img" src="./assets/images/spout.png" alt="" />
-            <div class="categories__item__content">
-              <h3 class="categories__item__h">Изливы</h3>
-              <a class="categories__item__link" href="">
-                <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7" stroke="#C6BCB2" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="categories__item categories__item--square" style="grid-area: box4">
-            <img class="categories__item__img" src="./assets/images/accessories.png" alt="" />
-            <div class="categories__item__content">              
-              <h3 class="categories__item__h">Аксессуары</h3>
-              <a class="categories__item__link" href="">
-                <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7" stroke="#C6BCB2" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <div class="categories__item categories__item--BIG" style="grid-area: box5">
-            <img class="categories__item__img" src="./assets/images/shower_racks.png" alt="" />
-            <div class="categories__item__content">              
-              <h3 class="categories__item__h">Душевые стойки</h3>
-              <a class="categories__item__link" href="">
-                <svg width="5" height="8" viewBox="0 0 5 8" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <path d="M1 1L3.85858 3.85858C3.93668 3.93668 3.93668 4.06332 3.85858 4.14142L1 7" stroke="#C6BCB2" stroke-width="1.5" stroke-linecap="round"/>
-                </svg>
-              </a>
-            </div>
-          </div>          
         </div>
-       
-      </section>
-    
 
-      <section class="actions display--desktop">
-        <div class="container">
-          <div class="actions__top">
-            <h2 class="actions__top__heading">Актуальные акции</h2>
-            <a class="actions__top__link button button--cta button--darkblue" href="">Все акции ></a>
+        <div class="cart__panel">             
+          <div class="cart__items">                  
+            <p class="cart__empty" id="cart__empty">Корзина пуста</p>             
           </div>
-          <div class="actions__bottom">
-
-              <div class="actions__bottom__item" style="grid-area: box1">
-                <img class="actions__bottom__item__img" src="./assets/images/stock_1.png" alt="" />
-                <p class="actions__bottom__item__period">Акция действует до 11.11.2023</p>
-                <h3 class="actions__bottom__item__heading">Скидка 15% на все смесители</h3>
-                <p class="actions__bottom__item__text">
-                  Предлагаем смесители для кухни, ванны, душа по низким ценам!
-                  Акция действует только на товары в наличии.
-                </p>
-                <a class="actions__bottom__item__link" href="">Подробнее ></a>
-              </div>
-
-              <div class="actions__bottom__item" style="grid-area: box2">
-                <img class="actions__bottom__item__img" src="./assets/images/stock_2.png" alt="" />
-                <p class="actions__bottom__item__period">Акция действует до 30.11.2023</p>
-                <h3 class="actions__bottom__item__heading">
-                  Осенняя распродажа сантехнических аксессуаров для ванной
-                  комнаты
-                </h3>
-                <p class="actions__bottom__item__text">
-                  Большой выбор аксессуаров для ванной со скидками до 40%.
-                  Товары со скидкой отмечены в каталоге красной табличкой SALE.
-                </p>
-                <a class="actions__bottom__item__link" href="">Подробнее ></a>
-              </div>
-
-              <div class="actions__bottom__item" style="grid-area: box3">
-                <img class="actions__bottom__item__img" src="./assets/images/stock_3.png" alt="" />
-                <p class="actions__bottom__item__period">Акция действует до 31.12.2023</p>
-                <h3 class="actions__bottom__item__heading">Душевые системы по выгодным ценам!</h3>
-                <p class="actions__bottom__item__text">
-                  Душевые системы, стойки и гарнитуры по выгодным ценам.
-                  Доставка в любой регион России. Гарантия от производителя.
-                </p>
-                <a class="actions__bottom__item__link" href="">Подробнее ></a>
-              </div>
-            </div> 
-        </div>
-      </section>
-
-      <section class="actions display--tablet">
-        <div class="container">
-          <div class="actions__top">
-            <h2 class="actions__top__heading">Актуальные акции</h2>
-            <a class="actions__top__link button button--cta button--darkblue" href="">Все акции ></a>
-          </div>
-          <div class="actions__bottom">
-            <div class="swiper actions__bottom__object">
-              <div class="swiper-wrapper">
-
-                  <div class="swiper-slide actions__bottom__item">                    
-                    <img class="actions__bottom__item__img" src="./assets/images/stock_1.png" alt="" />
-                      <p class="actions__bottom__item__period">Акция действует до 11.11.2023</p>
-                      <h3 class="actions__bottom__item__heading">Скидка 15% на все смесители</h3>
-                      <p class="actions__bottom__item__text">
-                        Предлагаем смесители для кухни, ванны, душа по низким ценам!
-                        Акция действует только на товары в наличии.
-                      </p>
-                      <a class="actions__bottom__item__link" href="">Подробнее ></a>                                    
-                  </div>
-  
-                  
-                  <div class="swiper-slide actions__bottom__item" >                  
-                      <img class="actions__bottom__item__img" src="./assets/images/stock_2.png" alt="" />
-                      <p class="actions__bottom__item__period">Акция действует до 30.11.2023</p>
-                      <h3 class="actions__bottom__item__heading">
-                        Осенняя распродажа сантехнических аксессуаров для ванной
-                        комнаты
-                            </h3>
-                      <p class="actions__bottom__item__text">
-                        Большой выбор аксессуаров для ванной со скидками до 40%.
-                        Товары со скидкой отмечены в каталоге красной табличкой SALE.
-                      </p>
-                      <a class="actions__bottom__item__link" href="">Подробнее ></a>
-                  </div>
-                  
-  
-                  <div class="swiper-slide actions__bottom__item">                    
-                    <img class="actions__bottom__item__img" src="./assets/images/stock_3.png" alt="" />
-                    <p class="actions__bottom__item__period">Акция действует до 31.12.2023</p>
-                    <h3 class="actions__bottom__item__heading">Душевые системы по выгодным ценам!</h3>
-                    <p class="actions__bottom__item__text">
-                     Душевые системы, стойки и гарнитуры по выгодным ценам.
-                     Доставка в любой регион России. Гарантия от производителя.
-                    </p>
-                     <a class="actions__bottom__item__link" href="">Подробнее ></a>
-                  </div>
-                </div> 
-              <div class="swiper-scrollbar"></div>
+          <div class="cart__form">
+            <div class="container">
+              <form class="cart__form__input" action="">
+                <label for="name"></label>
+                <input class="cart__form__input__section" type="text" name="" id="" placeholder="Ваше Имя">
+              </form>
+              <form class="cart__form__input" action="">
+                <label for="email"></label>
+                <input class="cart__form__input__section" type="email" name="" id="" placeholder="Электронная почта">
+              </form>
+              <form class="cart__form__input" action="">
+                <label for="phone"></label>
+                <input class="cart__form__input__section" type="tel" name="" id="" placeholder="Номер телефона">
+              </form>
+              <form class="cart__form__input" action="">
+                <label for="address"></label>
+                <input class="cart__form__input__section" type="address" name="" id="" placeholder="Адрес доставки">
+              </form>
+              <button class="cart__form__submit" type="submit">Оформить заказ</button>
             </div>
           </div>
         </div>
-      </section>
 
-      <section class="about">
-        <div class="container">
-          <div class="about__left__img">            
-            <img class="about__img__engie" src="./assets/images/engineer.png" alt="" />
-            <img class="about__img__office" src="./assets/images/office.png" alt="" />            
-          </div>
-          <div class="about__right">
-            <h2 class="about__right__top__heading">О компании</h2>
-            <p class="about__right__top__text">
-              Компания DEMM, созданная в Марментино, провинция Брешиа, работает
-              в сфере производства кранов и ванных комнат в течение последних
-              50 лет. Компания DEMM постоянно инвестирует в исследования
-              и разработку новых продуктов с целью обеспечения максимальной
-              эффективности при одновременном обеспечении качества и дизайна.
-            </p>
-            <div class="about__right__img">
-              <img class="about__img__engie" src="./assets/images/engineer.png" alt="" />
-              <img class="about__img__office" src="./assets/images/office.png" alt="" />
-            </div>
-            <p class="about__right__bottom__guarantee">
-              Гарантируем высочайшую безопасность и надёжность в
-              соответствии с международными стандартами качества            
-            </p>
-            <p class="about__right__bottom__text">
-                Мы производим обширную коллекцию изысканных и современных
-                смесителей и душевых кабин. Изготавливаем продукцию в очень
-                короткие сроки. Мы динамичны, дружелюбны и всегда рады
-                сотрудничеству!
-            </p>
-            <a class="about__right__bottom__link button button--cta button--darkblue" href="">Подробнее ></a>            
-            </div>
-        </div>
-      </section>
     </main>
-    
     <footer class="footer__section">
       <section class="contact">  
         <img class="contact__background" src="./assets/images/qa_background.png" alt="">      
@@ -662,6 +370,25 @@
       </div>
     </footer>
 
+    <template id="cartTemplate">
+      <div class="cart__item" id="cart__item">        
+        <div class="cart__item__view">
+          <img src="./assets/images/pages/catalog/product.png" alt="">
+        </div>
+        <div class="cart__item__info">
+          <h3 class="cart__item__name">Demm Rory Смеситель для раковины встраиваемый, с внутренней частью, излив 18 см, цвет: хром-золото</h3>
+          <p class="cart__item__article">4718CD</p>
+        </div>              
+        <div class="cart__item__add__handler">
+          <div class="cart__item__add__controls">
+            <button class="cart__item__change assortment__item--minus">-</button>
+            <span class="cart__item__add__quantity"></span>
+            <button class="cart__item__change assortment__item--plus">+</button>
+          </div>
+        </div>        
+      </div>    
+    </template>
+
     <div id="menuTablet" class="menuTablet">
       <div class="menuTablet__content">
         <button class="menuTablet__close" id="menuTabletClose">
@@ -738,7 +465,8 @@
 
     <!--JAVA-SCRIPT КОД ДЛЯ СВАППЕРА-->
     <script src="./js/swiper-bundle.js"></script>
-    <script src="./js/main.js"></script>
+    <script src="./js/cart.js"></script>
     <script src="./js/cart-manager.js"></script>
+    <script src="./js/item-base.js"></script>
   </body>
 </html>
