@@ -1,0 +1,53 @@
+version: '3.8'
+
+services:
+  # 1. Сервис приложения (ваш Node.js код)
+  app:
+    build: .                               # Указывает Docker использовать Dockerfile в текущей папке
+    container_name: website_container      # Удобное имя для контейнера
+    ports:
+      - "3000:3000"                        # Пробрасываем порт 3000 наружу
+    environment:
+      NODE_ENV: development
+      DB_HOST: db                          # 👈 ИМЯ ХОСТА - ЭТО ИМЯ СЕРВИСА НИЖЕ
+      DB_USER: my_user
+      DB_PASSWORD: my_password
+      DB_NAME: demm_db
+      DB_PORT: 3306
+    depends_on:
+      - db                                 # Говорит, что нужно запустить БД сначала
+    volumes:
+      - .:/app                             # Монтируем текущую папку для "горячей" перезагрузки
+      - /app/node_modules                  # Изолируем node_modules контейнера
+
+  # 2. Сервис базы данных (MySQL)
+  db:
+    image: mysql:8.0                       # Официальный образ MySQL
+    container_name: my_mysql_container
+    ports:
+      - "3306:3306"                        # Пробрасываем порт 3306 наружу (для работы с HeidiSQL и т.п.)
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password   # Пароль для root-пользователя
+      MYSQL_DATABASE: demm_db         # Имя базы данных, которая создастся при старте
+      MYSQL_USER: my_user                  # Имя пользователя для вашего приложения
+      MYSQL_PASSWORD: my_password          # Пароль для этого пользователя
+    volumes:
+      - mysql_data:/var/lib/mysql          # Том для сохранения данных БД
+      - ./mysql-dump:/docker-entrypoint-initdb.d # Автоматический импорт .sql файлов
+
+  # 3. Сервис для управления БД (ваша замена phpMyAdmin)
+  phpmyadmin:
+    image: phpmyadmin/phpmyadmin           # Официальный образ phpMyAdmin
+    container_name: my_phpmyadmin_container
+    ports:
+      - "8080:80"                          # Пробрасываем порт 8080 для доступа к phpMyAdmin
+    environment:
+      PMA_HOST: db                         # Указываем, к какому хосту подключаться
+      PMA_PORT: 3306
+      PMA_USER: my_user
+      PMA_PASSWORD: my_password
+    depends_on:
+      - db
+
+volumes:
+  mysql_data:                              # Объявляем именованный том для данных MySQL

@@ -286,20 +286,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const userIdForExample = 1;
 
+    async function getOrderItems(user_id) {
+        try {
+            const url = new URL('/api/cart_by_user_id', window.location.origin);
+            url.searchParams.append('user_id', user_id);
+
+            const getOrderItemsResponse = await fetch(url, {
+                method: 'GET'
+            });            
+            const data = getOrderItemsResponse.json();
+            return data;
+        }catch (error) {
+            console.error('Ошибка при вызове API:', error.getOrderItemsResponse?.data || error.message);
+            throw error;
+        }
+    }
+
     async function addItemToCart(user_id, item_id, price) {
         try {
-            const url = new URL('/api/add_item', window.location.origin);
-            url.searchParams.append('user_id', user_id);
-            url.searchParams.append('item_id', item_id);
-            url.searchParams.append('price', price);
+            const urlAddItem = new URL('/api/add_item', window.location.origin);
+            urlAddItem.searchParams.append('user_id', user_id);
+            urlAddItem.searchParams.append('item_id', item_id);
+            urlAddItem.searchParams.append('price', price);
 
-            const addItemToCartResponse = await fetch(url, {
+            const addItemToCartResponse = await fetch(urlAddItem, {
                 method: 'POST'
-            });            
-            const data = addItemToCartResponse.data;
+            });
+            const data = await addItemToCartResponse.json();
             return data;
         }catch (error) {
             console.error('Ошибка при вызове API:', error.addItemToCartResponse?.data || error.message);
+            throw error;
         }
     }
 
@@ -312,11 +329,19 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const itemQuantityPlusResponse = await fetch(url, {
                 method: 'POST'
+            });
+            const urlGetCount = new URL('/api/getItemCount', window.location.origin);
+            urlGetCount.searchParams.append('user_id', user_id);
+            urlGetCount.searchParams.append('item_id', item_id);
+
+            const getCountPerItemResponse = await fetch(urlGetCount, {
+                method: 'GET'
             });            
-            const data = itemQuantityPlusResponse.data;
+            const data = await getCountPerItemResponse.json();
             return data;
         }catch (error) {
             console.error('Ошибка при вызове API:', error.itemQuantityPlusResponse?.data || error.message);
+            throw error;
         }
     }
 
@@ -329,41 +354,61 @@ document.addEventListener("DOMContentLoaded", () => {
 
             const itemQuantityMinusResponse = await fetch(url, {
                 method: 'POST'
+            });
+
+            const urlGetCount = new URL('/api/getItemCount', window.location.origin);
+            urlGetCount.searchParams.append('user_id', user_id);
+            urlGetCount.searchParams.append('item_id', item_id);
+
+            const getCountPerItemResponse = await fetch(urlGetCount, {
+                method: 'GET'
             });            
-            const data = itemQuantityMinusResponse.data;
+            const data = await getCountPerItemResponse.json();
             return data;
         }catch (error) {
             console.error('Ошибка при вызове API:', error.itemQuantityMinusResponse?.data || error.message);
+            throw error;
+        }
+    }  
+
+    async function cutOrderById(user_id) {
+        try{
+            const url = new URL('/api/cutOrderById', window.location.origin);
+            url.searchParams.append('user_id', user_id);
+
+            const cutOrderByIdResponse = await fetch(url, {
+               method: 'POST'
+            });
+            const data = await cutOrderByIdResponse.json();
+            return data;
+        }catch (error){
+            console.error('Ошибка при вызове API:', error.cutOrderByIdResponse?.data || error.message);
+            throw error;
         }
     }
 
-    async function getCountPerItem(user_id, item_id) {        
-        try {
-            const url = new URL('/api/getItemCount', window.location.origin);
-            url.searchParams.append('user_id', user_id);
-            url.searchParams.append('item_id', item_id);
+    async function getItemCount(user_id, item_id) {
+        try{
+            const urlGetCount = new URL('/api/getItemCount', window.location.origin);
+            urlGetCount.searchParams.append('user_id', user_id);
+            urlGetCount.searchParams.append('item_id', item_id);
 
-            const getCountPerItemResponse = await fetch(url, {
+            const getItemCountResponse = await fetch(urlGetCount, {
                 method: 'GET'
             });            
-            const data = getCountPerItemResponse.json();
+            const data = await getItemCountResponse.json();
             return data;
         }catch (error) {
-            console.error('Ошибка при вызове API:', error.getCountPerItemResponse?.json || error.message);
+            console.error('Ошибка при вызове API:', error.getItemCountResponse?.data || error.message);
+            throw error;
         }
     }
 
-    function renderMockAssortment(mockArray) {  
-        
-        
-
+    function renderMockAssortment(mockArray) {            
         const assortmentTemplate = document.querySelector('#assortmentTemplate');
         document.querySelector('.assortment__bottom').innerHTML = "";
         
         mockArray.forEach((item) => {
-
-            //getCountPerItem(userIdForExample, item.id)
-
             const itemTemplate = assortmentTemplate.content.cloneNode(true);
             const assortmentItemTag = document.querySelector('#assortmentItemTag');
 
@@ -433,49 +478,65 @@ document.addEventListener("DOMContentLoaded", () => {
             const btnMinus = itemTemplate.querySelector('.assortment__item--minus');
             const btnPlus = itemTemplate.querySelector('.assortment__item--plus');
 
-            let count = CartManager.getTotalItemsPerProduct(item.id);
-            let quantityBorder = 1;
-
-            if (!CartManager.getTotalItemsPerProduct(item.id)) {
-                if (itmBtn) {
-                    itmBtn.addEventListener('click', async (e) => {
-                        ctrlBtn.classList.remove('d--none');
-                        itmBtn.classList.add('d--none');
-                        addItemToCart(userIdForExample, item.id, item.price);                       
-                        const countData = await getCountPerItem(userIdForExample, item.id);
-                        count = countData
-                        itmCount.innerHTML = count;
-                        //getCartTotalCount();                        
-                    });
-                }   
-            }else{
+            function showCotrolButtons() {
                 ctrlBtn.classList.remove('d--none');
-                const countData = getCountPerItem(userIdForExample, item.id);
-                count = countData
-                itmCount.innerHTML = count  
                 itmBtn.classList.add('d--none');
-            };  
+            }
+            function hideCotrolButtons() {
+                ctrlBtn.classList.add('d--none');
+                itmBtn.classList.remove('d--none');
+            }
+
+            let quantityBorder = 1;  
+
+            //Проверка на наличие незавершенного заказа 
+            (async () => {
+                try {
+                    const orderItemRows = await getOrderItems(userIdForExample, item.id);
+                    const count = orderItemRows[0].quantity
+                    if (count > quantityBorder) {
+                        // Товар уже в корзине – показываем контролы и количество
+                        if(item.id === orderItemRows[0].product_id) {
+                            showCotrolButtons()
+                            itmCount.innerHTML = count;
+                        }
+                    } else {
+                        // Товара нет – показываем кнопку "Добавить"
+                        hideCotrolButtons()
+                        itmCount.innerHTML = '0';
+                    }
+                } catch (err) {
+                    console.error('Ошибка загрузки количества', err);
+                }
+            })();
+
+            if (itmBtn) {                
+                itmBtn.addEventListener('click', async (e) => {
+                    showCotrolButtons();
+                    const newCount = await addItemToCart(userIdForExample, item.id, item.price);
+                    itmCount.innerHTML = newCount;
+                });
+            };
 
             if (btnPlus) {
                 btnPlus.addEventListener('click', async (e) => {
-                    itemQuantityPlus(userIdForExample, item.id, item.price);
-                    const countData = await getCountPerItem(userIdForExample, item.id);
-                    count = countData
+                    const count = await itemQuantityPlus(userIdForExample, item.id, item.price)
                     itmCount.innerHTML = count;
                 });
             }
 
             if (btnMinus) {
                 btnMinus.addEventListener('click', async (e) => {
-                    if (count > quantityBorder) {
-                        itemQuantityMinus(userIdForExample, item.id, item.price);
-                        const countData = await getCountPerItem(userIdForExample, item.id);
+                    const totalCountPerItem = await getItemCount(userIdForExample, item.id);
+                    if (totalCountPerItem > quantityBorder) {
+                        const countData = await itemQuantityMinus(userIdForExample, item.id, item.price);
                         count = countData
                         itmCount.innerHTML = count;
                         //getCartTotalCount(); 
-                    }else{
-                        ctrlBtn.classList.add('d--none');
-                        itmBtn.classList.remove('d--none');
+                    }
+                    if (totalCountPerItem === quantityBorder) {
+                        await cutOrderById(userIdForExample);
+                        hideCotrolButtons();
                         //CartManager.removeFromCart(item.id);
                         //getCartTotalCount(); 
                     }
@@ -484,7 +545,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
             document.querySelector('.assortment__bottom').append(itemTemplate)
         });
-    }   
+    }; 
 
     
     //Функция сортировки по убыванию цены

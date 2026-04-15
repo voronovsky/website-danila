@@ -1,16 +1,11 @@
 const mysql = require('mysql2')
 
 const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'root',
-    database: 'demm_db',
-    waitForConnections: true,
-    connectionLimit: 10,
-    maxIdle: 10,
-    idleTimeout: 60000,
-    queueLimit: 0,
-    enableKeepAlive: true,
-    keepAliveInitialDelay: 0
+  host: process.env.DB_HOST,       // Теперь равно 'db'
+  user: process.env.DB_USER,       // Теперь равно 'my_user'
+  password: process.env.DB_PASSWORD, // Теперь равно 'my_password'
+  database: process.env.DB_NAME,   // Теперь равно 'my_database'
+  port: process.env.DB_PORT        // Теперь равно 3306
 });
 
 const promisePool = pool.promise();

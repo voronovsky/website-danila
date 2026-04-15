@@ -6,9 +6,9 @@ const path = require('path');
 
 const app = express() //Создание веб-приложения на базе фреймворка express
 
-const itemRouter = require('../website-danila/routes/items')
+const itemRouter = require('./routes/items')
 
-const userRouter = require('../website-danila/routes/users')
+const userRouter = require('./routes/users')
 
 app.use(express.static(path.join(__dirname, 'public')));
 

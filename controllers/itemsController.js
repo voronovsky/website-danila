@@ -14,47 +14,39 @@ exports.getItems = async (req, res) => {
     }
 }
 
-exports.getOrder = async (req, res) => {
-    try{
-        console.log('/////////////РАБОТАЕТ getOrder/////////////')
-    }catch{
-        console.error(e);
-        res.status(500).json({
-            message: 'Внутренняя ошибка сервера, надо разбираться'
-        })
-    }
-}
-
 exports.addItem = async (req, res) => {
     try{
         console.log('/////////////РАБОТАЕТ addItem/////////////')
         const {user_id, item_id, price} = req.query;
         console.log("Получен набор данных: ", {user_id, item_id, price})
-        /*
-        const [searchOrderRows] = await db.query(
-            'SELECT T.id, T.user_id FROM orders as T WHERE T.user_id = ? AND T.status = "Собирается"',
-            [user_id]
+
+        //Создаем новый заказ            
+        const [insertOrderRows] = await db.query(
+            'INSERT INTO orders (user_id, status) VALUES (?, "Собирается")',
+            user_id
         )
-        if (![searchOrderRows]) {
-        
-            //console.log("Заказа в базе не обнаружено, создаем новый")
-            //Создаем новый заказ
-            */
-            const [insertOrderRows] = await db.query(
-                'INSERT INTO orders (user_id, status) VALUES (1, "Собирается")'
-            )
-            //Вытаскиваем номер заказа(он авто-инкримент - создается автоматически)
-            const orderId = insertOrderRows.insertId
-            console.log("Создали и получили номер нового заказа: ", orderId)
-            //Заносим информацию о товаре заказа
-            const [insertOrderItemsRows] = await db.query(
-                'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, 1, ?)',
-                [orderId, item_id, price]
-            )
-            console.log("Добавили инфу о товаре в соответствующую таблицу", {orderId, item_id, price})
-            console.log('/////////////addItem ЗАКОНЧИЛ РАБОТУ/////////////')
-        
-        //}
+        //Вытаскиваем номер заказа(он авто-инкримент - создается автоматически)
+        const orderId = insertOrderRows.insertId
+        console.log("Создали и получили номер нового заказа: ", orderId)
+
+        // 2. Добавить товар ()
+        await db.query(
+            'INSERT INTO order_items (order_id, product_id, quantity, price) VALUES (?, ?, 1, ?)',
+            [orderId, item_id, price]
+        )
+        console.log("Добавили товар в заказ: ", orderId)
+
+        // 3. Получить новое количество
+        const [rows] = await db.query(
+            'SELECT quantity FROM order_items WHERE order_id = ? AND product_id = ?',
+            [orderId, item_id]
+        );
+        const newQuantity = rows[0]?.quantity || 1;
+        console.log("Получено кол-во товаров в корзине: ", newQuantity)
+        // 4. Вернуть клиенту объект с новым количеством
+        res.json(newQuantity);        
+        console.log('/////////////addItem ЗАКОНЧИЛ РАБОТУ/////////////')            
+         
     }catch(e){
         console.error(e);
         res.status(500).json({
@@ -81,6 +73,13 @@ exports.plusItem = async (req, res) => {
             )
             if (updateRowsPlus.affectedRows > 0) {
                 console.log("Удалось обновить кол-во товаров по заказу", orderId)
+                const [rows] = await db.query(
+                    'SELECT quantity FROM order_items WHERE order_id = ? AND product_id = ?',
+                    [orderId, item_id]
+                );
+                const newQuantity = rows[0]?.quantity || 1;
+                console.log("Получено кол-во товаров: ", newQuantity)                
+                res.json(newQuantity);
             }else{
                 console.log("Не удалось обновить кол-во товаров по заказу", orderId)
             }
@@ -118,17 +117,23 @@ exports.minusItem = async (req, res) => {
                 [price, orderId, item_id]
                 )
                 if (updateRowsMinus.affectedRows > 0) {
-                console.log("Удалось обновить кол-во товаров по заказу", orderId)
+                    console.log("Удалось обновить кол-во товаров по заказу", orderId)
+                    const [rows] = await db.query(
+                        'SELECT quantity FROM order_items WHERE order_id = ? AND product_id = ?',
+                        [orderId, item_id]
+                    );
+                    const newQuantity = rows[0]?.quantity || 1;
+                    console.log("Получено кол-во товаров: ", newQuantity)                
+                    res.json(newQuantity);
                 }else{
                     console.log("Не удалось обновить кол-во товаров по заказу", orderId)
                 }
-            }
-            if(itemQuantity[0].quantity === 1){
-                const [deleteRows] = await db.query(
+            }else{
+                const [deleteItemRows] = await db.query(
                     'DELETE FROM order_items WHERE product_id = ?',
                     [item_id]
                 )
-                if (deleteRows.affectedRows > 0) {
+                if (deleteItemRows.affectedRows > 0) {
                     console.log("Удалось удалить товарную позицию по заказу", orderId)
                 }else{
                     console.log("Не удалось удалить товарную позицию по заказу", orderId)
@@ -156,20 +161,120 @@ exports.getCountPerItem = async (req, res) => {
         if (searchCount.length > 0) {
             const orderId = searchCount[0].id
             console.log("Ищем товары по этому заказу: ", orderId)
-            const [itemCount] = await db.query(
+            const [rows] = await db.query(
                 'SELECT quantity FROM order_items WHERE order_id = ? AND product_id = ?',
                 [orderId, item_id]
-            )
-            if (itemCount.length > 0) {
-                const result = itemCount[0].quantity; 
-                console.log('Обнаружено кол-во по товару: ', result, 'по заказу', orderId);
-                res.json(result);
-            } else {                
-                console.log('Товар не найден в заказе');                
-            }
+            );
+            const newQuantity = rows[0]?.quantity || 1;
+            console.log("Получено кол-во товаров: ", newQuantity)                
+            res.json(newQuantity);
             console.log("/////////////getCountPerItem ЗАКОНЧИЛ РАБОТУ/////////////")            
+        }else{
+            console.log('Заказ не найден (корзина пуста)');
+            res.json(0); // нет заказа, количество 0
+            console.log("/////////////getCountPerItem ЗАКОНЧИЛ РАБОТУ/////////////") 
         }
     }catch(e){
+        console.error(e);
+        res.status(500).json({
+            message: 'Внутренняя ошибка сервера, надо разбираться'
+        })
+    }
+}
+
+exports.getCartByUser = async(req, res) => {
+    try{
+        console.log('/////////////РАБОТАЕТ getCartByUser/////////////')
+        const {user_id} = req.query;
+        const [searchCart] = await db.query(
+            'SELECT id FROM orders WHERE user_id = ? AND status = "Собирается"',
+            [user_id]
+        )
+        if (searchCart.length > 0) {
+            const orderId = searchCart[0].id
+            console.log("Ищем корзину по этому заказу: ", orderId)
+            const [cartItems] = await db.query(
+                'SELECT id, order_id, product_id, quantity, price FROM order_items WHERE order_id = ?',
+                [orderId]
+            )
+            if (cartItems.length > 0) {
+                const result = cartItems;
+                console.log("Обнаружили товары корзины по заказу: ", orderId);
+                console.log(result);
+                res.json(result);
+            }else{
+                console.log("Не удалось обнаружить корзину по заказу: ", orderId);
+                res.json(0)
+            }
+            console.log("/////////////getCartByUser ЗАКОНЧИЛ РАБОТУ/////////////")   
+        }else{
+            console.log("Не удалось обнаружить корзину");
+            res.json(0)
+            console.log("/////////////getCartByUser ЗАКОНЧИЛ РАБОТУ/////////////") 
+        }
+    }catch(e){
+        console.error(e);
+        res.status(500).json({
+            message: 'Внутренняя ошибка сервера, надо разбираться'
+        })
+    }
+}
+
+exports.cutOrderById = async(req, res) => {
+    try{
+        console.log('/////////////РАБОТАЕТ cutOrderById/////////////')
+        const {user_id} = req.query;
+        console.log('Ищем заказ по пользователю: ', user_id)
+        const [searchCart] = await db.query(
+            'SELECT id FROM orders WHERE user_id = ? AND status = "Собирается"',
+            [user_id]
+        )
+        if (searchCart.length > 0) {
+            const orderId = searchCart[0].id
+            console.log('По пользователю обнаружен заказ для удаления: ', orderId)
+            const [deleteOrderRows] = await db.query(
+                'DELETE FROM orders WHERE id = ?',
+                [orderId]
+            )
+            if (deleteOrderRows.affectedRows > 0) {
+                console.log("Удалось удалить заказ", orderId)
+                res.json('delete success')
+                console.log("/////////////cutOrderById ЗАКОНЧИЛ РАБОТУ/////////////") 
+            }else{
+                console.log("Не удалось удалить заказ", orderId)
+                res.json('delete NOT success')
+                console.log("/////////////cutOrderById ЗАКОНЧИЛ РАБОТУ/////////////") 
+            }
+        }        
+    }catch(e){
+        console.error(e);
+        res.status(500).json({
+            message: 'Внутренняя ошибка сервера, надо разбираться'
+        })
+    }
+}
+
+exports.getOrderItems = async (req, res) => {
+    try{
+        console.log('/////////////РАБОТАЕТ getOrderItems/////////////')
+        const {user_id} = req.query;
+        console.log('Ищем заказ по пользователю: ', user_id)
+        const [searchOrder] = await db.query(
+            'SELECT id FROM orders WHERE user_id = ? AND status = "Собирается"',
+            [user_id]
+        )
+        if (searchCart.length > 0) {
+            const orderId = searchCart[0].id
+            console.log('По пользователю обнаружен заказ: ', orderId)
+            const [orderItemRows] = await db.query(
+                'SELECT product_id, quantity, price WHERE order_id = ?',
+                [orderId]
+            )
+            console.log('Обнаружен массив товаров по заказу: ', orderItemRows)      
+            res.json(orderItemRows)  
+            console.log("/////////////getOrderItems ЗАКОНЧИЛ РАБОТУ/////////////")    
+        }
+    }catch{
         console.error(e);
         res.status(500).json({
             message: 'Внутренняя ошибка сервера, надо разбираться'
